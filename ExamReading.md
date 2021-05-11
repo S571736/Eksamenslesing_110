@@ -390,10 +390,10 @@ Goal:
 
 ### Definitions
 
-  * **Encapsulation:** å legge ein melding/pakke type fra et overliggende nivå inn i ein melding/pakketype for the underliggende nivå
-  * **decapsulation:** Å ta en data ut av ein melding/pakketype før det gis videre til det overliggende nivå?
-  * **Multiplexing:** Å legge til kontrollinformasjon i ein pakke/melding som identifiserer en komponent på mottakersiden på tilsvarende nivå som skal motta/håndtere payload i pakken/meldingen
-  * **demultiplexing:** Å gi ein pakke/melding videre basert på kontroll(header) informasjon til ein komponent som skal håndtere pakken/meldingen videre
+* **Encapsulation:** å legge ein melding/pakke type fra et overliggende nivå inn i ein melding/pakketype for the underliggende nivå
+* **decapsulation:** Å ta en data ut av ein melding/pakketype før det gis videre til det overliggende nivå?
+* **Multiplexing:** Å legge til kontrollinformasjon i ein pakke/melding som identifiserer en komponent på mottakersiden på tilsvarende nivå som skal motta/håndtere payload i pakken/meldingen
+* **demultiplexing:** Å gi ein pakke/melding videre basert på kontroll(header) informasjon til ein komponent som skal håndtere pakken/meldingen videre
 
 ### Multiplexing - demultiplexing
 
@@ -857,6 +857,7 @@ Messages have to be properly addressed - provide a systemwide unique name of the
 ### MQTT message format
 
 Message types
+
 * Connect
 * Connack
 * publish
@@ -871,6 +872,96 @@ Message types
 * disconnect
 * pingreq
 * pingresp
+
+## Naming
+
+### Naming in DS
+
+* Importance of naming in DS
+  * Share resources
+  * Uniquely identify entities
+  * Refer to location
+* Implementation
+  * Distributed across several machines
+* Core issues
+  * Resolution of names to the entities they refer to
+  * Scalability and efficiency of naming system
+
+### Name, Entity, Address, Access point, identifier
+
+* **names:** Bits or characters used to refer to an entity
+* **Entity:** Can represents virtually anything
+  * resources (hosts, printers, disks, files), processes, messages, users
+* **Access point:** where resources/processes are contained or can be found
+* **Address:** we need the address of the access points to be able to find or locate resources
+* **Identifier:** A name that uniquely identifies an entity
+
+### Identifier
+
+A true identifier is a name that has the following properties
+
+* An identifier refers to at most one entity
+* Each entity is referred to by at most one identifier
+* An identifier always refers to the same entity(i.e. it is never reused)
+
+### Key points
+
+* Entities can be operated on: e.g. Printer interface with operations for printing a document or a server that services requests
+* An entity can offer more than one access point
+* An entity may change its access points
+* A name for an entity that is independent from its addresses is ofte much easier and more flexible to use. Such a name is called **location independent**
+* If an address can be assigned to a different entity, we cannot use such address as an identifier
+* Identifiers can be used to unambiguously refer to an entity
+
+### Classes of naming systems
+
+* Flat naming
+* Structured naming
+* Attribute-based naming
+
+### Flat naming
+
+Characteristics
+
+* Entities are refered to by an identifier/name with no meaning
+* It bears no structure
+* e.g. MAC or memory addresses
+
+Core issue
+
+* Needs special mechanisms to trace the location of refered entities
+
+Approaches for searching/resolving a name/identifier of an entity to its address
+
+* Broadcasting
+* Chains of forwarding links
+* Home-based approach
+* Distributed Hash tables
+* Hierarchical location services
+
+## Broadcasting
+
+* Broadcast the ID, requesting the entity to return its current address
+* Can never scale beyond local-area networks (LANs)
+* Requires all processes to listen to incoming location requests
+
+Address Resolution Protocol (ARP)
+
+* To find out which MAC address is associated with an IP address, broadcast the query "who is this IP address"
+
+**MAC:** media access control, used as a network address in communications within a network segment.
+
+### Multicasting
+
+* Broadcasting has the problems that it:
+  * Wastes bandwidth because of request messages
+  * Requires all processes to listen to incoming location requests(not meant for them)
+* Multicasting associate a host to a multicast group using a multicast address
+* Only a restricted group of hosts receives the request
+* A multicast address can be used as a general location service for multiple entities
+* Another way to use a multicast address is to associate it with replicated entity, and to use multicasting to locate the nearest replica
+
+### Forwarding pointers
 
 ## Pensum Distribuerte systemer
 
