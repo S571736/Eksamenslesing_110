@@ -1081,6 +1081,15 @@ Three voting-case examples
 * Platform as a Service (PaaS)
 * Infrastructure as a Service (IaaS)
 
+### Link layer services and functionality
+
+* Addressing: identify the nodes connected to the communication link using Link-layer addresses (MAC addresses)
+* Framing: encapsulating network layer datagrams into link-layer frames and defining a frame format
+* Link access: coordination of link access among multiple connected nodes - for broadcast links
+* Error detection: detect transmission errors in frames and discard frames containing errors
+* Reliable delivery(optional): guarantee that a network layer datagram is successfully transmitted across the link
+* flow control (optional): adjust frame transmission to avoid overflow in receiver buffer
+
 ## Pensum Distribuerte systemer
 
 * Chapter 1: Introduction
