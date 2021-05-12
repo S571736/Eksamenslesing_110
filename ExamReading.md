@@ -963,6 +963,124 @@ Address Resolution Protocol (ARP)
 
 ### Forwarding pointers
 
+### Multicasting
+
+* Two communication models
+  * Flooding-based multicasting
+  * Gossip-based multicasting
+    * Anti-entropy(Pull and Push model)
+    * Rumor spreading
+
+### Flooding-based multicasting
+
+Essence
+
+* P simply sends a message *m* to each of all its neighbours. Each neighbour will forward that message, except to P, and only if it had not seen *m* before
+* Structured topology(deterministic)
+  * Model an overlay network as a connected graph with N nodes and M edges
+  * If G is a tree, we'll send M = N-1 messages (Optimal situation)
+  * If G is fully connected (mesh), we'll send M = 0.5 . N . (N-1) messages (worst case)
+* Main issue: Resource is found but message still forwarded by peers in the network(performance)
+
+Unstructured network (Random Graph)
+
+* a graph with probability Pedge that two vertices are connected
+
+with Pedge, M = 0.5 . N . (N-1) . Pedge = messages
+
+Performance: The more edges, the more expensive to multicast message
+
+### Probabilistic flooding-based multicasting
+
+Main goal: improve performance by reducing the number of messages
+
+* P needs to flood message m, to other nodes
+* Let P forward m, with a certain probability Pflood to each specific neighbor
+  * Can lead to a dramatic drop in total messages (Linear to Pflood) sent across the network
+* Risk:
+  * The lower Pflood the higher the chance that not all nodes in the network will be reached
+  * Why? There is a probability of (1-pflood)^n that a node Q with n neighbords do not get a message m, because all the neighbors decided not to forward m
+* An improvement is to use a node's own number of neighbors (i.e. a nodes degree) or the neighbors to adjust Pflood.
+
+### Types of consistency models
+
+Consistency models can be divided into two categories
+
+* Data-centric Consistency models
+  * These models define how the data updates are propagated across the replicas to keep them consistent
+* Client-Centric consistency models
+  * Theses models assume that clients connect to different replicas at each time
+  * The models ensure that whenever a client connects to a replica, the replica is brought up to date with the replica that the client accessed previously
+
+### Data-centric consistency models
+
+Data centric consistency models describe how the replicated data is kept consistent, and what the process can expect
+
+* Consistency Specification models:
+  * These models enable specifying the consistency the levels that are tolerable to the application
+* Models for Consistent Ordering of Operation:
+  * These models compliment consistency specification models by specifying the order in which the data updates are propagated to different replicas
+
+### Client centric consistency models
+
+Data-centric models lead to excessive overheads in applications where:
+
+* A majority operatoins are reads and
+* updates occur frequently, and are often triggered from one clinet process
+
+For such applications, a weaker form of consistency called Client-centric Consistency is employed for improving efficiency
+
+* Client-centric consisency models specify two requirements
+  1. Eventual Consistency
+     * All the replicas should eventually converge on a final value
+  2. Client Consistency guarantees
+     * Each client processes should be guaranteed some level of consistency while accessing the data value from different replicas
+
+### Eventual consistency
+
+Many applications can tolerate an inconsistency for a long time
+
+* Webpages updates, Web Search - Crawling, indexing and ranking. Updates to DNS server
+
+In such applications, it is acceptable and efficient if replicas in the data store rarely exchange updates
+
+* A data-store is termed as Eventually Consistent if:
+  * All replicas will gradually become consistent in the absence of updates
+
+Typically, updates are propagated infrequently in eventually consisten data-stores
+
+### Replicated-Write protocol
+
+In a replicated-writed protocol, updates can be carried out at multiple replicas in contrast with only one in primay-based protocol
+
+* Active Replication protocol
+  * Clients can write at any replica
+  * The replica will proporgate updates to other replicas
+    * Update by means of the write operation
+    * The Actual update
+* Quorum-based Protocol
+  * Voting based approach
+  * Build majority votes among replicas to obtain permission fro a read or write operation
+
+### Quorum-based protocol
+
+* Majority votes to form quorum for a read and write operations
+* prevent
+  * Read-write conflicts
+  * Write-Write conflicts
+
+Three voting-case examples
+
+1. A correct choice of read and write set
+2. A choice that may lead to write-write conflicts
+3. A correct choice, known as ROWA(read one, write all)
+
+### Cloud service models
+
+* Software as a Service (SaaS)
+* Platform as a Service (PaaS)
+* Infrastructure as a Service (IaaS)
+
 ## Pensum Distribuerte systemer
 
 * Chapter 1: Introduction
