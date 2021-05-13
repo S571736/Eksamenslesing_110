@@ -781,7 +781,7 @@ Combining Asynchronous RPCs
 
 * Deferred Synchronous RPC combines two asynchronous RPC to provide an ad hoc form of synchronicity
 * The first asynchronous call selects the procedure to be executed and provides for the parameters
-* The second asynchronous call returnss the result to the client.
+* The second asynchronous call returns the result to the client.
 * In between, the caller may be on computing
 * This is realized by using a callback function to the client
 
@@ -962,6 +962,61 @@ Address Resolution Protocol (ARP)
 * Another way to use a multicast address is to associate it with replicated entity, and to use multicasting to locate the nearest replica
 
 ### Forwarding pointers
+
+### Lamport clocks: Objective
+
+* We seek a clock time C(a) for every event a
+* plan: Tag events with clock times; use clock times to make DS correct
+* clock condition: if a->b, then C(a) < C(b)
+
+### Lamport clock algorithm
+
+* Each process Pi maintains a locak clock (counter) Ci
+
+1. Before executing an event, Ci <- Ci + 1
+   * set event time C(a) <- Ci
+2. Send the local clock in the message m. C(m) = clock value
+3. On process Pj receiving a message M:
+   * Set Cj and receive event time C(c) <- 1 + max {Cj, C(m)}
+
+### Ordering all events
+
+* Break ties by appending the process number to each event:
+  1. Process Pi timestamps event e with Cj(e).i
+  2. C(a).i < C(b).j when
+     * C(a) < C(b), or C(a) = C(b) and i < j
+
+* Now, for any two events a and b, C(a) < C(b) or C(b) < C(a)
+  * This is called a total ordering of events
+
+### Vector clocks (VC)
+
+* label each event e with a vector V(e) = [c1, c2, ..., cn]
+  * Cj is a count of events in process i that causally precede e
+* Initially, all vectors are [0, 0, ...,0]
+* Two update rules:
+  1. For each local event on process i, increment local entry Ci
+  2. If process j receives message with vector [d1, d2, ..., dn]
+     * Set each local entry Ck = max {Ck, Dk}
+     * Increment local entry Cj
+
+### DHCP: Dynamic Host Configuration protocol
+
+### IP address configuration
+
+* Network interfaces on hosts and routers must be configured - static/manually configuration is not practical
+* Typical information that need to be configured on a host
+  * IP address of network interface
+  * IP address of a router (default gateway) that can be used for forwarding datagrams outside the (sub)network of the host
+  * Network mask specifying what part of IP address (sub)network part - needed for broadcasting and network address
+  * IP address of a Domain Name System Server(DNS server) - needed to resolve hostnames into IP addresses to be used as destination addresses for datagrams
+
+### Dynamic Host Configuration protocol
+
+* Client-server protocol based on UDP for automatically assigning IP addresses to hosts
+* The DHCP server maintains a pool of available IP addresses that can be assigned to clients
+* DHCP can also be used to provide network configuration information (default gateway, DNS server, network mask)
+* DHCP server, DNS server and router typically coincides in many home networks
 
 ### Multicasting
 
