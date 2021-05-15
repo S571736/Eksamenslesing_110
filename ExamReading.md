@@ -768,6 +768,20 @@ Cloud computing is one of the major application of VM technologies in distribute
 * Message-oriented communication
   * MQTT examples
 
+### Types of communication
+
+* Persistent communication: 
+  * Electronic mail is typical example - a message that has been submitted for transmission is stored by the communication middleware as long as it takes to deliver it to the receiver
+* Transient communication:
+  * A message is stored only as long as the sending and receiving applications are executing. If the middleware cannot deliver a message due to a transmission interrupt or inactive recipient, it will simply be discarded
+* Asynchronous communication
+  * a sender continues immediately after it has submitted its message for transmission - the message is temporarily stored immediately by the middleware upon submission
+* Synchronous communication
+  * The sender is blocked until its request is known to be accepted. Synchronization can take place at three points
+    * The sender may be blocked until the middelware notifies that it will take over transmission of the request
+    * The sender may synchonize until its request has been delivered to the inteded recipient
+    * Synchronization may take place by letting the sender wait until its request has been fully processes
+
 ### Traditional RPC
 
 * In traditional RPC, process blocks until the operation is complete
@@ -950,6 +964,58 @@ Address Resolution Protocol (ARP)
 * To find out which MAC address is associated with an IP address, broadcast the query "who is this IP address"
 
 **MAC:** media access control, used as a network address in communications within a network segment.
+
+## Fault tolerance
+
+### Fault tolerance
+
+* An overall goal in distributed systems is to construct the system in such a way that it can automatically recover from partial failures
+* Fault tolerance is the property that enables a system to continue operating properly in the event of failures
+* For example, TCP is designed to allow reliable two-way communication in a packet-switched network, even in the presence of communicatoin links which are imperfect of overloaded
+
+### Basic definitions
+
+* Failure
+  * Any deviation of the observed behavior from the specified behavior
+* Error
+  * System state where any further processing by the system will lead to failure
+* Fault
+  * Mechanical or algorithmic cause of an error
+
+Fault -> Error -> Failure
+
+A system is said to be fault tolerant if it can provide its services even in the presence of faults
+
+### Fault tolerance
+
+Fault tolerance is the realization that we will have faults in our system(hardware or/and software) and we have to design the system in such a way that it will be tolerant of those faults. That is, it should compensate for the faults for the faults and continue to function.
+
+### k-fault-tolerant systems
+
+* A system is said to be k-fault tolerant if it can survive faults in k components and still meet its specifications
+* How can we achieve k-fault-tolerant system?
+* Considerations
+  * Availability
+  * Consensus - Agreement protocol
+
+### k-faul-tolerant systems: Client requires reliable results
+
+* How large does a k-fault tolerant group need to be?
+  1. With crash/omission/timing failures: we need a total of k+1 members as a no member will produce an incorrect result, so the result of one member is good enough.(Availability of data) 
+  2. Consensus
+     1. Crash failures: requres 2k+1 members so that the correct result can be obtained through a majority vote, k+1
+     2. Arbitrary failures: A process tells different things to different processes. Requires 3k+1 processes.
+
+### Consensus in faulty systems
+
+* A process group typically requires reaching an agreement in:
+  * Electing a coordinator
+  * Deciding whether or not to commit a transaction
+  * Dividing tasks among workers
+  * Synchronization(Coordinate a critical section)
+* When the communication and processes:
+  * are perfect, reaching an agreement is often straight forward
+  * are not perfect, there are problems in reaching an agreement
 
 ### Multicasting
 
@@ -1136,6 +1202,60 @@ Three voting-case examples
 * Platform as a Service (PaaS)
 * Infrastructure as a Service (IaaS)
 
+### Infrastructure as a service (IaaS)
+
+* Vendor provides and provisions computing resources to consumer
+  * Virtual computing, storage and network resource can be provisioned on demand
+* Consumer is provided with customized virtual machines
+* Example:
+  * Amazon elastic compute cloud(EC2)
+  * Google Compute Engine
+  * Azure VM
+
+* Benefits
+  * Infrastructure scalability
+  * Integrated management
+    * Performance, resource consumtion/utilization, load
+  * Economical cost
+    * hardware, IT support
+
+### Platform as a service (PaaS)
+
+* Development & Deployment
+  * PaaS provides the users the capability to develop and deploy application in the cloud using the development tools, application programming interfaces(APIs), software libraries and service provided by the cloud service provider
+* Provider Manages Infrastructure:
+  * The cloud service provider manages the underlying cloud infrastructure including servers, network, operating systems and storage
+* User Manages Application
+  * The users, themselves, are responsible for developing, deploying, configuring and managing applications on the cloud infrastructure
+
+* Tools and technology selected by vendor
+* Control over data life-cycle
+* Benefits
+  * Rapid development and deployment
+  * small startup cost
+* Examples:
+  * Google App engine, Azure App services
+* Disadvantages
+  * Development technology is limited to vendor provided/supported tools and services
+
+### Software as a Service (SaaS)
+
+* Vendor/provider controlled applications accessed over the network
+* Characteristics
+  * Network based access
+  * Multi-tenancy
+  * single software release for all
+* SaaS examples
+  * Salesforce.com, Google docs, Office 365
+* SaaS disadvantages
+  * Dependency on network, cloud service provider
+* Performance
+  * Limited client bandwidth
+* Security
+  * Good: better security than personal computers
+  * Bad: CSP is in charge of the data
+  * ugly: user privacy
+
 ### Link layer services and functionality
 
 * Addressing: identify the nodes connected to the communication link using Link-layer addresses (MAC addresses)
@@ -1144,6 +1264,8 @@ Three voting-case examples
 * Error detection: detect transmission errors in frames and discard frames containing errors
 * Reliable delivery(optional): guarantee that a network layer datagram is successfully transmitted across the link
 * flow control (optional): adjust frame transmission to avoid overflow in receiver buffer
+
+###
 
 ## Pensum Distribuerte systemer
 
