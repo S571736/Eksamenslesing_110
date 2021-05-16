@@ -1157,6 +1157,12 @@ For such applications, a weaker form of consistency called Client-centric Consis
   2. Client Consistency guarantees
      * Each client processes should be guaranteed some level of consistency while accessing the data value from different replicas
 
+### Sequential consistency model
+
+* Sequential consistency model enforces that all the update operations are executed at the replicas in a sequential order. Operations of each process appear in the order specified by its program
+* Consider a data-store with variable x
+  * In the two data-stores below, identify the sequentially consisten data-store
+
 ### Eventual consistency
 
 Many applications can tolerate an inconsistency for a long time
