@@ -324,7 +324,7 @@ Goal:
 * Main purpose is to create a network of networks
   * Unreliable end-to-end(host-to-host) transmission of datagrams(loss, duplication, and overtaking is possible)
   * Multihop routing of datagrams based on local routing/forwarding table
-* Service implemented by the Internet Protocol(IPv4/v6)
+* Service implemented by the Internet Protocol(IPv4/v6(IP))
   * Addressing using
     * 32-bit IPv4 addresses
       * 158.37.70.86
@@ -1271,7 +1271,7 @@ Three voting-case examples
 * Reliable delivery(optional): guarantee that a network layer datagram is successfully transmitted across the link
 * flow control (optional): adjust frame transmission to avoid overflow in receiver buffer
 
-###
+
 
 ## Pensum Distribuerte systemer
 
