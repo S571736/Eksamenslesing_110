@@ -1066,6 +1066,29 @@ Fault tolerance is the realization that we will have faults in our system(hardwa
      * Set each local entry Ck = max {Ck, Dk}
      * Increment local entry Cj
 
+### Token-ring algorithm
+
+* Organize a distributed system as a logical ring
+* Assume there are N processes
+  * Token is passed from process Pk to process P(k+1) mod N
+* Use a token to arbitrate access to critical section
+* Must wait for token before entering CS
+* Pass the token to neighbor once done or if not interested
+
+* **Pros:**
+  * Only one process has the token at a given time
+  * Mutex is guaranteed
+  * No starvation!
+* **Cons:**
+  * Token lost
+    * Process holding it crashes
+    * Message containing token is lost
+    * Detecting lost token may be hard(unspotted token != lost token)
+    * Crashed nodes can break the ring
+  * Neighbor crashes
+    * Solution: let neighbor acknowledge the receipt of token
+    * Every process must maintain the current ring configuration
+
 ### DHCP: Dynamic Host Configuration protocol
 
 ### IP address configuration
@@ -1122,6 +1145,23 @@ Main goal: improve performance by reducing the number of messages
   * The lower Pflood the higher the chance that not all nodes in the network will be reached
   * Why? There is a probability of (1-pflood)^n that a node Q with n neighbords do not get a message m, because all the neighbors decided not to forward m
 * An improvement is to use a node's own number of neighbors (i.e. a nodes degree) or the neighbors to adjust Pflood.
+
+### Remote-write protocol
+
+* Rules
+  * All write operations are forwarded to the primary replica
+  * Primary performs the update on its local copy and forwards the update to backup servers
+  * Backup server performs the update and send acknowledgement to the primary
+  * Primary sends ack to initial process
+  * Read operations are carried out locally at each replica
+
+* Remote Write provides
+  * A simple way to implement sequential consistency
+  * Guarantees that client see the most recent write operations
+* Client blocks until all the replicas are updated
+* Remote-Write protocols are applied to DS that require fault-tolerance
+  * Replicas are mostly placed on the same LAN to reduce latency
+  * Non-blocking approach is possible - not fault tolerant and read of most recent write is not guaranteed
 
 ### Types of consistency models
 
